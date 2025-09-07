@@ -1,6 +1,7 @@
 const express = require('express');
 const WebSocket = require('ws');
 const { exec } = require('child_process');
+const http = require('http');
 const fs = require('fs');
 
 const app = express();
@@ -8,11 +9,7 @@ const PORT = process.env.PORT || 10000;
 
 app.use(express.static('public'));
 
-const httpServer = http.createServer(app);
-const httpsServer = https.createServer({
-    cert: fs.readFileSync('./ssl/cert.pem'),
-    key: fs.readFileSync('./ssl/private.key')
-}, app);
+const server = http.createServer(app); // ✅ Только HTTP
 
 const wss = new WebSocket.Server({ server });
 
